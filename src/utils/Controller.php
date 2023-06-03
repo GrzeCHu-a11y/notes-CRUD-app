@@ -5,17 +5,22 @@ declare(strict_types=1);
 namespace App;
 
 require_once("View.php");
+require_once("Database.php");
 
 class Controller
 {
     const DEFAULT_PAGE = 'notesList';
     private View $view;
-    public array $request;
+    private array $request;
+    private array $dbConfig = [];
+    private Database $database;
 
-    public function __construct(array $request)
+    public function __construct(array $request, $dbConfig)
     {
         $this->view = new View();
         $this->request = $request;
+        $this->dbConfig = $dbConfig;
+        $this->database = new Database($dbConfig);
     }
 
     public function run(): void
