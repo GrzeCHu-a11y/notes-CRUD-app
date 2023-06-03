@@ -8,7 +8,7 @@ require_once("View.php");
 
 class Controller
 {
-    const DEAFULT_PAGE = 'notesList';
+    const DEFAULT_PAGE = 'notesList';
     private View $view;
     public array $request;
 
@@ -20,12 +20,26 @@ class Controller
 
     public function run(): void
     {
-        $page = $this->requestGetData();
+        switch ($this->requestGetData()) {
+            case 'createNote':
+                $page = 'createNote';
+                break;
+
+            default:
+                $page = self::DEFAULT_PAGE;
+                break;
+        }
+
         $this->view->render($page);
     }
 
     private function requestGetData(): string
     {
-        return $this->request['get']['action'] ?? self::DEAFULT_PAGE;
+        return $this->request['get']['action'] ?? self::DEFAULT_PAGE;
+    }
+
+    private function requestPostData(): array
+    {
+        return [];
     }
 }
