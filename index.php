@@ -11,6 +11,6 @@ $request = [
     'get' => $_GET,
     'post' => $_POST
 ];
-
+dump($_POST);
 $controller = new Controller($request);
 $controller->run();

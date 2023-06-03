@@ -21,8 +21,25 @@ class Controller
     public function run(): void
     {
         switch ($this->requestGetData()) {
+
             case 'createNote':
                 $page = 'createNote';
+                $postData = $this->requestPostData();
+
+                if (!empty($postData)) {
+                    $noteData = [
+                        'title' => $postData['title'],
+                        'description' => $postData['description']
+                    ];
+                    // FEATURE IN TESTING
+
+                    // $page = self::DEFAULT_PAGE;
+                    // header('Location: /');
+
+                    // FEATURE IN TESTING
+
+                } else $noteData = [];
+
                 break;
 
             default:
@@ -40,6 +57,6 @@ class Controller
 
     private function requestPostData(): array
     {
-        return [];
+        return $this->request['post'];
     }
 }
