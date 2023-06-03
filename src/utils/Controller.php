@@ -20,7 +20,12 @@ class Controller
 
     public function run(): void
     {
-        $page = $this->request['get']['action'] ?? self::DEAFULT_PAGE;
+        $page = $this->requestGetData();
         $this->view->render($page);
+    }
+
+    private function requestGetData(): string
+    {
+        return $this->request['get']['action'] ?? self::DEAFULT_PAGE;
     }
 }

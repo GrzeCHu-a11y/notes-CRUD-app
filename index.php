@@ -12,7 +12,5 @@ $request = [
     'post' => $_POST
 ];
 
-dump($_POST);
-dump($_GET);
 $controller = new Controller($request);
 $controller->run();
