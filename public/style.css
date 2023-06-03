@@ -1,29 +1,9 @@
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-nav {
+.page {
     width: 100%;
-    height: 10vh;
-    background-color: rgb(103, 103, 206);
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
 }
 
-a {
-    color: black;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-ul {
-    list-style-type: none;
-}
-
-li {
-    display: block;
+.page-container {
+    padding-top: 60px;
+    margin: 0 auto;
+    width: 80%;
 }

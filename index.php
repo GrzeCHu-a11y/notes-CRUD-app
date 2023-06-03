@@ -12,7 +12,7 @@ $request = [
     'post' => $_POST
 ];
 
-// dump($request['get']);
-
-$controller = new Controller();
+dump($_POST);
+dump($_GET);
+$controller = new Controller($request);
 $controller->run();

@@ -8,16 +8,19 @@ require_once("View.php");
 
 class Controller
 {
+    const DEAFULT_PAGE = 'notesList';
+    private View $view;
+    public array $request;
 
-    public View $view;
-
-    public function __construct()
+    public function __construct(array $request)
     {
         $this->view = new View();
+        $this->request = $request;
     }
 
     public function run(): void
     {
-        $this->view->render();
+        $page = $this->request['get']['action'] ?? self::DEAFULT_PAGE;
+        $this->view->render($page);
     }
 }
