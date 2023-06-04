@@ -8,6 +8,8 @@ use PDO;
 
 class Database
 {
+    private PDO $dbConnection;
+
     public function __construct($dbConfig)
     {
         $this->createConnection($dbConfig);
@@ -17,14 +19,32 @@ class Database
     {
         try {
             $dsn = "mysql:dbname={$dbConfig['db']['database']};host={$dbConfig['db']['host']}";
-            $dbConnection = new PDO(
+            $this->dbConnection = $dbConnection = new PDO(
                 $dsn,
                 $dbConfig['db']['user'],
                 $dbConfig['db']['password'],
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                ]
             );
-            echo "Connection Succesful";
+            // echo "Connection Succesful";
         } catch (\Throwable $th) {
             throw $th;
+        }
+    }
+
+    public function createNote(array $noteData): void
+    {
+        try {
+            $title = $this->dbConnection->quote($noteData['title']);
+            $description = $this->dbConnection->quote($noteData['description']);
+            $created = $this->dbConnection->quote(date('Y-m-d H:i:s'));
+
+            $query = "INSERT INTO crud_notes(title, description, created) VALUES($title, $description, $created)";
+            $this->dbConnection->exec($query);
+        } catch (\Throwable $th) {
+            throw $th;
+            echo "sorry note not added";
         }
     }
 }

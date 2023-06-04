@@ -36,13 +36,9 @@ class Controller
                         'title' => $postData['title'],
                         'description' => $postData['description']
                     ];
-                    // FEATURE IN TESTING
-
-                    // $page = self::DEFAULT_PAGE;
-                    // header('Location: /');
-
-                    // FEATURE IN TESTING
-
+                    $this->database->createNote($noteData);
+                    $page = self::DEFAULT_PAGE;
+                    header('Location: /');
                 } else $noteData = [];
 
                 break;
