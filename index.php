@@ -6,13 +6,14 @@ namespace App;
 
 require_once("src/utils/debug.php");
 require_once("src/utils/Controller.php");
+$dbConfig = require_once("config/config.php");
+
 
 $request = [
     'get' => $_GET,
     'post' => $_POST
 ];
 
-dump($_POST);
-dump($_GET);
-$controller = new Controller($request);
+
+$controller = new Controller($request, $dbConfig);
 $controller->run();
