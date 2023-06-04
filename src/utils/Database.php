@@ -47,4 +47,17 @@ class Database
             echo "sorry note not added";
         }
     }
+
+    public function getNotes(): array
+    {
+        try {
+            $query = "SELECT * FROM crud_notes";
+            $result = $this->dbConnection->query($query);
+            $notes = $result->fetchAll(PDO::FETCH_ASSOC);
+            return $notes;
+        } catch (\Throwable $th) {
+            throw $th;
+            echo "notes not found";
+        }
+    }
 }

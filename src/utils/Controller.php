@@ -40,15 +40,21 @@ class Controller
                     $page = self::DEFAULT_PAGE;
                     header('Location: /');
                 } else $noteData = [];
-
                 break;
 
+            case 'notesList':
+                $page = self::DEFAULT_PAGE;
+                $notes = $this->database->getNotes();
+
+                $this->database->getNotes();
+
+                break;
             default:
                 $page = self::DEFAULT_PAGE;
                 break;
         }
 
-        $this->view->render($page);
+        $this->view->render($page, $notes ?? []);
     }
 
     private function requestGetData(): string
