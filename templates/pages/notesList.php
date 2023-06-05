@@ -27,7 +27,7 @@
                         <td><?php echo $note['title'] ?></td>
                         <td><?php echo $note['created'] ?></td>
                         <td>
-                            <input class="btn btn-primary" type="submit" value="Show description">
+                            <p><a href="/?action=showNoteDescription&id=<?php echo (int) $note['id'] ?>" class="link-primary" style="text-decoration: none;">Show description</a></p>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -9,6 +9,7 @@ use PDO;
 class Database
 {
     private PDO $dbConnection;
+    public int $noteId;
 
     public function __construct($dbConfig)
     {
@@ -59,5 +60,13 @@ class Database
             throw $th;
             echo "notes not found";
         }
+    }
+
+    public function getNoteDescription(): string
+    {
+        $query = "SELECT description FROM crud_notes WHERE id = $this->noteId";
+        $result = $this->dbConnection->query($query);
+        $noteDescription = $result->fetchAll(PDO::FETCH_ASSOC);
+        return $noteDescription[0]['description'];
     }
 }
