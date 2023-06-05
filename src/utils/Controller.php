@@ -46,7 +46,7 @@ class Controller
                 $page = self::DEFAULT_PAGE;
                 $notes = $this->database->getNotes();
 
-                $this->database->getNotes();
+                // $this->database->getNotes();
 
                 break;
             case 'showNoteDescription':
