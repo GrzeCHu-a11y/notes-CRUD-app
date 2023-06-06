@@ -46,8 +46,6 @@ class Controller
                 $page = self::DEFAULT_PAGE;
                 $notes = $this->database->getNotes();
 
-                // $this->database->getNotes();
-
                 break;
             case 'showNoteDescription':
                 $page = 'showNoteDescription';
@@ -55,6 +53,12 @@ class Controller
                 $this->database->noteId = $noteId;
                 $noteDescription = $this->database->getNoteDescription();
                 break;
+
+            case 'editNote':
+                $page = 'editNote';
+                $this->database->updateNote();
+                break;
+
             default:
                 $page = self::DEFAULT_PAGE;
                 break;

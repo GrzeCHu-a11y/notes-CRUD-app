@@ -17,7 +17,7 @@
                     <th scope="col">id</th>
                     <th scope="col">Title</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Details</th>
+                    <th scope="col">Options</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +28,7 @@
                         <td><?php echo $note['created'] ?></td>
                         <td>
                             <p><a href="/?action=showNoteDescription&id=<?php echo (int) $note['id'] ?>" class="link-primary" style="text-decoration: none;">Show description</a></p>
+                            <p><a href="/?action=editNote&id=<?php echo (int) $note['id'] ?>" class="link-primary" style="text-decoration: none;">Edit note</a></p>
                         </td>
                     </tr>
                 <?php endforeach; ?>
