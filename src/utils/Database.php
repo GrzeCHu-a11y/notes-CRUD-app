@@ -69,4 +69,19 @@ class Database
         $noteDescription = $result->fetchAll(PDO::FETCH_ASSOC);
         return $noteDescription[0]['description'];
     }
+
+    public function updateNote(): void
+    {
+        if (isset($_POST['title'], $_POST['description'], $_POST['id'])) {
+            $title = $this->dbConnection->quote($_POST['title']);
+            $description = $this->dbConnection->quote($_POST['description']);
+            $id = $this->dbConnection->quote($_POST['id']);
+            try {
+                $query = "UPDATE crud_notes SET title = $title, description = $description WHERE id=$id ";
+                $this->dbConnection->exec($query);
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+    }
 }
