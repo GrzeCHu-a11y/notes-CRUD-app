@@ -29,6 +29,7 @@
                         <td>
                             <p><a href="/?action=showNoteDescription&id=<?php echo (int) $note['id'] ?>" class="link-primary" style="text-decoration: none;">Show description</a></p>
                             <p><a href="/?action=editNote&id=<?php echo (int) $note['id'] ?>" class="link-primary" style="text-decoration: none;">Edit note</a></p>
+                            <p><a href="/?action=deleteNote&id=<?php echo (int) $note['id'] ?>" class="link-primary" style="text-decoration: none;">Delete note</a></p>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -59,6 +59,11 @@ class Controller
                 $this->database->updateNote();
                 break;
 
+            case 'deleteNote':
+                $page = 'deleteNote';
+                $this->database->deleteNote();
+                break;
+
             default:
                 $page = self::DEFAULT_PAGE;
                 break;

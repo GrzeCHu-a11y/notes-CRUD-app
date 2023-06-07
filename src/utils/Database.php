@@ -87,4 +87,18 @@ class Database
             }
         }
     }
+
+    public function deleteNote(): void
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            try {
+                $query = "DELETE FROM crud_notes WHERE id = $id LIMIT 1 ";
+                $this->dbConnection->exec($query);
+                header('Location: /');
+            } catch (Throwable $e) {
+                throw new Exception("Problems with note delete");
+            }
+        }
+    }
 }
