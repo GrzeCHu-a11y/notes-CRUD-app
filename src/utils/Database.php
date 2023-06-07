@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use Exception;
 use PDO;
+use Throwable;
 
 class Database
 {
@@ -28,9 +30,8 @@ class Database
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
                 ]
             );
-            // echo "Connection Succesful";
-        } catch (\Throwable $th) {
-            throw $th;
+        } catch (Throwable $e) {
+            throw new Exception("incorrect database configuration");
         }
     }
 
@@ -43,9 +44,8 @@ class Database
 
             $query = "INSERT INTO crud_notes(title, description, created) VALUES($title, $description, $created)";
             $this->dbConnection->exec($query);
-        } catch (\Throwable $th) {
-            throw $th;
-            echo "sorry note not added";
+        } catch (Throwable $e) {
+            throw new Exception("Problems with adding a note to the database");
         }
     }
 
@@ -56,18 +56,21 @@ class Database
             $result = $this->dbConnection->query($query);
             $notes = $result->fetchAll(PDO::FETCH_ASSOC);
             return $notes;
-        } catch (\Throwable $th) {
-            throw $th;
-            echo "notes not found";
+        } catch (Throwable $e) {
+            throw new Exception("Problems with downloading notes from database");
         }
     }
 
     public function getNoteDescription(): string
     {
-        $query = "SELECT description FROM crud_notes WHERE id = $this->noteId";
-        $result = $this->dbConnection->query($query);
-        $noteDescription = $result->fetchAll(PDO::FETCH_ASSOC);
-        return $noteDescription[0]['description'];
+        try {
+            $query = "SELECT description FROM crud_notes WHERE id = $this->noteId";
+            $result = $this->dbConnection->query($query);
+            $noteDescription = $result->fetchAll(PDO::FETCH_ASSOC);
+            return $noteDescription[0]['description'];
+        } catch (Throwable $e) {
+            throw new Exception("Problems with downloading description from database");
+        }
     }
 
     public function updateNote(): void
@@ -79,8 +82,8 @@ class Database
             try {
                 $query = "UPDATE crud_notes SET title = $title, description = $description WHERE id=$id ";
                 $this->dbConnection->exec($query);
-            } catch (\Throwable $th) {
-                throw $th;
+            } catch (Throwable $e) {
+                throw new Exception("Problems with note updating", 400);
             }
         }
     }

@@ -12,7 +12,7 @@
     <div>
         <h2>Note description</h2>
         <br>
-        <h5> <?php echo $noteDescription ?></h5>
+        <h5> <?php echo htmlentities($noteDescription) ?></h5>
         <br>
         <button type="button" class="btn btn-primary"><a href="/" style="color: white; text-decoration:none">back to notes</a></button>
     </div>

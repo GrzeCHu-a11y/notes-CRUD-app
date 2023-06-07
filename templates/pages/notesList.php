@@ -24,8 +24,8 @@
                 <?php foreach ($notes as $note) : ?>
                     <tr>
                         <td><?php echo $note['id'] ?></td>
-                        <td><?php echo $note['title'] ?></td>
-                        <td><?php echo $note['created'] ?></td>
+                        <td><?php echo htmlentities($note['title']) ?></td>
+                        <td><?php echo htmlentities($note['created']) ?></td>
                         <td>
                             <p><a href="/?action=showNoteDescription&id=<?php echo (int) $note['id'] ?>" class="link-primary" style="text-decoration: none;">Show description</a></p>
                             <p><a href="/?action=editNote&id=<?php echo (int) $note['id'] ?>" class="link-primary" style="text-decoration: none;">Edit note</a></p>
