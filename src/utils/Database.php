@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App;
 
+use Exception;
 use PDO;
+use Throwable;
 
 class Database
 {
     private PDO $dbConnection;
+    public int $noteId;
 
     public function __construct($dbConfig)
     {
@@ -27,9 +30,8 @@ class Database
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
                 ]
             );
-            // echo "Connection Succesful";
-        } catch (\Throwable $th) {
-            throw $th;
+        } catch (Throwable $e) {
+            throw new Exception("incorrect database configuration");
         }
     }
 
@@ -42,9 +44,8 @@ class Database
 
             $query = "INSERT INTO crud_notes(title, description, created) VALUES($title, $description, $created)";
             $this->dbConnection->exec($query);
-        } catch (\Throwable $th) {
-            throw $th;
-            echo "sorry note not added";
+        } catch (Throwable $e) {
+            throw new Exception("Problems with adding a note to the database");
         }
     }
 
@@ -55,9 +56,49 @@ class Database
             $result = $this->dbConnection->query($query);
             $notes = $result->fetchAll(PDO::FETCH_ASSOC);
             return $notes;
-        } catch (\Throwable $th) {
-            throw $th;
-            echo "notes not found";
+        } catch (Throwable $e) {
+            throw new Exception("Problems with downloading notes from database");
+        }
+    }
+
+    public function getNoteDescription(): string
+    {
+        try {
+            $query = "SELECT description FROM crud_notes WHERE id = $this->noteId";
+            $result = $this->dbConnection->query($query);
+            $noteDescription = $result->fetchAll(PDO::FETCH_ASSOC);
+            return $noteDescription[0]['description'];
+        } catch (Throwable $e) {
+            throw new Exception("Problems with downloading description from database");
+        }
+    }
+
+    public function updateNote(): void
+    {
+        if (isset($_POST['title'], $_POST['description'], $_POST['id'])) {
+            $title = $this->dbConnection->quote($_POST['title']);
+            $description = $this->dbConnection->quote($_POST['description']);
+            $id = $this->dbConnection->quote($_POST['id']);
+            try {
+                $query = "UPDATE crud_notes SET title = $title, description = $description WHERE id=$id ";
+                $this->dbConnection->exec($query);
+            } catch (Throwable $e) {
+                throw new Exception("Problems with note updating", 400);
+            }
+        }
+    }
+
+    public function deleteNote(): void
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            try {
+                $query = "DELETE FROM crud_notes WHERE id = $id LIMIT 1 ";
+                $this->dbConnection->exec($query);
+                header('Location: /');
+            } catch (Throwable $e) {
+                throw new Exception("Problems with note delete");
+            }
         }
     }
 }

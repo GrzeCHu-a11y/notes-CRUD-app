@@ -46,15 +46,30 @@ class Controller
                 $page = self::DEFAULT_PAGE;
                 $notes = $this->database->getNotes();
 
-                $this->database->getNotes();
-
                 break;
+            case 'showNoteDescription':
+                $page = 'showNoteDescription';
+                $noteId = (int) $_GET['id'];
+                $this->database->noteId = $noteId;
+                $noteDescription = $this->database->getNoteDescription();
+                break;
+
+            case 'editNote':
+                $page = 'editNote';
+                $this->database->updateNote();
+                break;
+
+            case 'deleteNote':
+                $page = 'deleteNote';
+                $this->database->deleteNote();
+                break;
+
             default:
                 $page = self::DEFAULT_PAGE;
                 break;
         }
 
-        $this->view->render($page, $notes ?? []);
+        $this->view->render($page, $notes ?? [], $noteDescription ?? []);
     }
 
     private function requestGetData(): string
