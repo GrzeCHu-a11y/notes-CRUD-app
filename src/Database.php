@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+require_once("Request.php");
+
 use Exception;
 use PDO;
 use Throwable;
@@ -11,11 +13,13 @@ use Throwable;
 class Database
 {
     private PDO $dbConnection;
+    private $request;
     public int $noteId;
 
     public function __construct($dbConfig)
     {
         $this->createConnection($dbConfig);
+        $this->request = new Request();
     }
 
     private function createConnection($dbConfig)
@@ -51,8 +55,15 @@ class Database
 
     public function getNotes(): array
     {
+        $selectOptions = [
+            'option' => $this->request->getParams('select') ?? 'ASC',
+        ];
+
+        htmlentities($selectedOption = $selectOptions['option']);
+        $sortBy = 'created';
+
         try {
-            $query = "SELECT * FROM crud_notes";
+            $query = "SELECT * FROM crud_notes ORDER BY $sortBy $selectedOption";
             $result = $this->dbConnection->query($query);
             $notes = $result->fetchAll(PDO::FETCH_ASSOC);
             return $notes;
@@ -90,8 +101,8 @@ class Database
 
     public function deleteNote(): void
     {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
+        if ($this->request->getParams('id') !== null) {
+            $id = $this->request->getParams('id');
             try {
                 $query = "DELETE FROM crud_notes WHERE id = $id LIMIT 1 ";
                 $this->dbConnection->exec($query);
