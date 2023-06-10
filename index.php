@@ -7,17 +7,12 @@ namespace App;
 use Throwable;
 
 require_once("src/utils/debug.php");
-require_once("src/utils/Controller.php");
+require_once("src/Controller.php");
+require_once("src/Request.php");
 $dbConfig = require_once("config/config.php");
 
-
-$request = [
-    'get' => $_GET,
-    'post' => $_POST
-];
-
 try {
-    $controller = new Controller($request, $dbConfig);
+    $controller = new Controller($dbConfig);
     $controller->run();
 } catch (Throwable $e) {
     echo "<h1>Error</h1>";
