@@ -51,8 +51,15 @@ class Database
 
     public function getNotes(): array
     {
+        $selectOptions = [
+            'option' => $_GET['select'] ?? 'ASC',
+        ];
+
+        htmlentities($selectedOption = $selectOptions['option']);
+        $sortBy = 'created';
+
         try {
-            $query = "SELECT * FROM crud_notes";
+            $query = "SELECT * FROM crud_notes ORDER BY $sortBy $selectedOption";
             $result = $this->dbConnection->query($query);
             $notes = $result->fetchAll(PDO::FETCH_ASSOC);
             return $notes;
