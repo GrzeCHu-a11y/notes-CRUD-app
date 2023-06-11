@@ -28,7 +28,7 @@ class Controller
     {
         $page = self::DEFAULT_PAGE;
         $notes = $this->database->getNotes();
-        $this->view->render($page, $notes);
+        $this->view->render($page, $notes, []);
     }
 
     public function createNote(): void
