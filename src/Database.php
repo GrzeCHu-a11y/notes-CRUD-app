@@ -72,6 +72,19 @@ class Database
         }
     }
 
+    public function getSearchedNotes(string $phrase): array
+    {
+        try {
+            $phrase = $this->dbConnection->quote('%' . $phrase . '%', PDO::PARAM_STR);
+            $query = "SELECT * FROM crud_notes WHERE title LIKE($phrase)";
+            $result = $this->dbConnection->query($query);
+            $notes = $result->fetchAll(PDO::FETCH_ASSOC);
+            return $notes;
+        } catch (Throwable $e) {
+            throw new Exception("Problems with searching notes");
+        }
+    }
+
     public function getNoteDescription(): string
     {
         try {

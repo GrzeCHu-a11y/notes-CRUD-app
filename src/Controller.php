@@ -27,7 +27,14 @@ class Controller
     public function notesList(): void
     {
         $page = self::DEFAULT_PAGE;
-        $notes = $this->database->getNotes();
+        $phrase = $this->request->postParams('phrase');
+
+        if ($phrase) {
+            $notes = $this->database->getSearchedNotes($phrase);
+        } else {
+            $notes = $this->database->getNotes();
+        };
+
         $this->view->render($page, $notes, []);
     }
 
